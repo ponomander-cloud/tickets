@@ -1,0 +1,45 @@
+name: Fetch live RZD coupe prices
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - request.json
+      - fetch_rzd.py
+      - requirements.txt
+      - .github/workflows/fetch-rzd.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch live RZD data
+        run: python fetch_rzd.py
+
+      - name: Commit fresh result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/latest.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update live RZD coupe prices"
+            git push
+          fi
