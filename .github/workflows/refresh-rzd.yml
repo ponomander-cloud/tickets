@@ -42,8 +42,11 @@ concurrency:
 
 jobs:
   refresh:
-    runs-on: macos-15
+    runs-on: [self-hosted, Windows, X64, rzd-live]
     timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
         with:
