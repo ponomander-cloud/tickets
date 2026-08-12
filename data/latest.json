@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-12T18:47:32.838347+00:00",
+  "fetched_at": "2026-08-12T19:00:57.715385+00:00",
   "source": "ticket.rzd.ru via rzd-api 3.0.0",
   "request": {
     "from": "Москва",
@@ -13,8 +13,8 @@
   "days": [
     {
       "date": "2026-08-15",
-      "train_count": 8,
-      "coupe_train_count": 6,
+      "train_count": 10,
+      "coupe_train_count": 7,
       "top_coupe": [
         {
           "date": "2026-08-15",
@@ -29,6 +29,17 @@
         },
         {
           "date": "2026-08-15",
+          "train_number": "542М",
+          "price": 7297.3,
+          "available_places": 1,
+          "departure_time": "15:34",
+          "arrival_time": "08:09",
+          "arrival_date": "2026-08-17",
+          "duration": "1 д 16 ч 35 мин",
+          "duration_minutes": 2435
+        },
+        {
+          "date": "2026-08-15",
           "train_number": "099А",
           "price": 8686.8,
           "available_places": 2,
@@ -37,24 +48,13 @@
           "arrival_date": "2026-08-16",
           "duration": "1 д 15 ч 55 мин",
           "duration_minutes": 2395
-        },
-        {
-          "date": "2026-08-15",
-          "train_number": "225А",
-          "price": 9585.2,
-          "available_places": 8,
-          "departure_time": "01:19",
-          "arrival_time": "20:02",
-          "arrival_date": "2026-08-16",
-          "duration": "1 д 18 ч 43 мин",
-          "duration_minutes": 2563
         }
       ]
     },
     {
       "date": "2026-08-16",
-      "train_count": 9,
-      "coupe_train_count": 7,
+      "train_count": 8,
+      "coupe_train_count": 6,
       "top_coupe": [
         {
           "date": "2026-08-16",
@@ -80,14 +80,14 @@
         },
         {
           "date": "2026-08-16",
-          "train_number": "044М",
-          "price": 8453.2,
+          "train_number": "104В",
+          "price": 11081.3,
           "available_places": 1,
-          "departure_time": "23:46",
-          "arrival_time": "08:58",
-          "arrival_date": "2026-08-18",
-          "duration": "1 д 9 ч 12 мин",
-          "duration_minutes": 1992
+          "departure_time": "10:40",
+          "arrival_time": "10:24",
+          "arrival_date": "2026-08-17",
+          "duration": "23 ч 44 мин",
+          "duration_minutes": 1424
         }
       ]
     },
@@ -271,7 +271,7 @@
           "date": "2026-08-21",
           "train_number": "587М",
           "price": 5920.3,
-          "available_places": 22,
+          "available_places": 20,
           "departure_time": "15:54",
           "arrival_time": "05:47",
           "arrival_date": "2026-08-23",
