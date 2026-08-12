@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import parse_qs, urlparse
 
@@ -12,7 +13,12 @@ DISPATCH_URL = "https://api.github.com/repos/ponomander-cloud/tickets/dispatches
 
 
 def load_snapshot() -> dict[str, object]:
-    response = requests.get(SNAPSHOT_URL, timeout=(5.0, 15.0))
+    response = requests.get(
+        SNAPSHOT_URL,
+        params={"cachebust": time.time_ns()},
+        headers={"Cache-Control": "no-cache"},
+        timeout=(5.0, 15.0),
+    )
     response.raise_for_status()
     return response.json()
 
