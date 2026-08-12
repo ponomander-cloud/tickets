@@ -8,15 +8,32 @@ from urllib.parse import parse_qs, urlparse
 
 import requests
 
-SNAPSHOT_URL = "https://raw.githubusercontent.com/ponomander-cloud/tickets/main/data/latest.json"
+COMMITS_URL = "https://api.github.com/repos/ponomander-cloud/tickets/commits/main"
+CONTENTS_URL = "https://api.github.com/repos/ponomander-cloud/tickets/contents/data/latest.json"
 DISPATCH_URL = "https://api.github.com/repos/ponomander-cloud/tickets/dispatches"
 
 
 def load_snapshot() -> dict[str, object]:
+    nonce = str(time.time_ns())
+    common_headers = {
+        "Accept": "application/vnd.github+json",
+        "Cache-Control": "no-cache, no-store, max-age=0",
+        "Pragma": "no-cache",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    commit_response = requests.get(
+        COMMITS_URL,
+        params={"cachebust": nonce},
+        headers=common_headers,
+        timeout=(5.0, 15.0),
+    )
+    commit_response.raise_for_status()
+    commit_sha = commit_response.json()["sha"]
+
     response = requests.get(
-        SNAPSHOT_URL,
-        params={"cachebust": time.time_ns()},
-        headers={"Cache-Control": "no-cache"},
+        CONTENTS_URL,
+        params={"ref": commit_sha, "cachebust": nonce},
+        headers={**common_headers, "Accept": "application/vnd.github.raw+json"},
         timeout=(5.0, 15.0),
     )
     response.raise_for_status()
