@@ -1,0 +1,121 @@
+name: Refresh live RZD snapshot
+run-name: Refresh RZD snapshot (${{ github.event_name }})
+
+on:
+  workflow_dispatch:
+    inputs:
+      from:
+        description: Origin station
+        required: true
+        default: Москва
+      to:
+        description: Destination station
+        required: true
+        default: Адлер
+      date_from:
+        description: First travel date
+        required: true
+        default: "2026-08-15"
+      days:
+        description: Number of days
+        required: true
+        default: "14"
+      top_per_day:
+        description: Unique trains per day
+        required: true
+        default: "3"
+      overall_top:
+        description: Overall ranking size
+        required: true
+        default: "10"
+  repository_dispatch:
+    types: [refresh-rzd]
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-rzd-snapshot
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Build request
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_FROM: ${{ inputs.from }}
+          INPUT_TO: ${{ inputs.to }}
+          INPUT_DATE_FROM: ${{ inputs.date_from }}
+          INPUT_DAYS: ${{ inputs.days }}
+          INPUT_TOP_PER_DAY: ${{ inputs.top_per_day }}
+          INPUT_OVERALL_TOP: ${{ inputs.overall_top }}
+          PAYLOAD_FROM: ${{ github.event.client_payload.from }}
+          PAYLOAD_TO: ${{ github.event.client_payload.to }}
+          PAYLOAD_DATE_FROM: ${{ github.event.client_payload.date_from }}
+          PAYLOAD_DAYS: ${{ github.event.client_payload.days }}
+          PAYLOAD_TOP_PER_DAY: ${{ github.event.client_payload.top_per_day }}
+          PAYLOAD_OVERALL_TOP: ${{ github.event.client_payload.overall_top }}
+        run: |
+          python - <<'PY'
+          import json, os
+
+          def value(name, default):
+              if os.environ["EVENT_NAME"] == "repository_dispatch":
+                  return os.environ.get(f"PAYLOAD_{name}") or default
+              if os.environ["EVENT_NAME"] == "workflow_dispatch":
+                  return os.environ.get(f"INPUT_{name}") or default
+              return default
+
+          request = {
+              "from": value("FROM", "Москва"),
+              "to": value("TO", "Адлер"),
+              "date_from": value("DATE_FROM", "2026-08-15"),
+              "days": int(value("DAYS", "14")),
+              "top_per_day": int(value("TOP_PER_DAY", "3")),
+              "overall_top": int(value("OVERALL_TOP", "10")),
+          }
+          with open("request.json", "w", encoding="utf-8") as file:
+              json.dump(request, file, ensure_ascii=False, indent=2)
+          PY
+      - name: Fetch fresh RZD data
+        run: python fetch_rzd.py
+      - name: Validate snapshot
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+
+          with open("data/latest.json", encoding="utf-8") as file:
+              result = json.load(file)
+          fetched_at = datetime.fromisoformat(result["fetched_at"])
+          age = (datetime.now(timezone.utc) - fetched_at).total_seconds()
+          assert age < 600, f"snapshot is not fresh: {age:.0f}s old"
+          assert len(result["days"]) == result["request"]["days"]
+          assert len(result["overall_cheapest"]) <= result["request"]["overall_top"]
+          assert len(result["overall_value"]) <= result["request"]["overall_top"]
+          for day in result["days"]:
+              trains = [ticket["train_number"] for ticket in day["top_coupe"]]
+              assert len(trains) == len(set(trains)), f"duplicate train on {day['date']}"
+              assert len(trains) <= result["request"]["top_per_day"]
+          PY
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add request.json data/latest.json
+          git commit -m "Refresh live RZD snapshot" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
