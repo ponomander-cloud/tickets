@@ -1,2 +1,8 @@
+[project]
+name = "rzd-tickets-live"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = ["rzd-api==3.0.0"]
+
 [tool.vercel]
 entrypoint = "api.search:handler"
