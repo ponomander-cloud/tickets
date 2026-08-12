@@ -47,15 +47,13 @@ jobs:
     defaults:
       run:
         shell: bash
+    env:
+      PYTHON_BIN: C:/Users/1/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-      - run: pip install -r requirements.txt
+      - run: '"$PYTHON_BIN" -m pip install -r requirements.txt'
       - name: Build request
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -72,7 +70,7 @@ jobs:
           PAYLOAD_TOP_PER_DAY: ${{ github.event.client_payload.top_per_day }}
           PAYLOAD_OVERALL_TOP: ${{ github.event.client_payload.overall_top }}
         run: |
-          python - <<'PY'
+          "$PYTHON_BIN" - <<'PY'
           import json, os
 
           def value(name, default):
@@ -94,10 +92,10 @@ jobs:
               json.dump(request, file, ensure_ascii=False, indent=2)
           PY
       - name: Fetch fresh RZD data
-        run: python fetch_rzd.py
+        run: '"$PYTHON_BIN" fetch_rzd.py'
       - name: Validate snapshot
         run: |
-          python - <<'PY'
+          "$PYTHON_BIN" - <<'PY'
           import json
           from datetime import datetime, timezone
 
