@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from datetime import date, datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import urlsplit, urlunsplit
@@ -28,6 +29,7 @@ RZD_ADDRESS_POOL = (
     "212.164.138.130",
     "212.164.138.131",
 )
+RZD_EDGE_RELAY = "https://rzd-tickets-live.vercel.app/api/rzd-proxy"
 
 
 class RzdAddressPoolSession(requests.Session):
@@ -41,6 +43,19 @@ class RzdAddressPoolSession(requests.Session):
         parts = urlsplit(url)
         if parts.hostname != "ticket.rzd.ru":
             return super().request(method, url, **kwargs)
+
+        if os.getenv("VERCEL"):
+            headers = dict(kwargs.pop("headers", {}) or {})
+            headers["X-RZD-Relay"] = "train-pricing"
+            original_timeout = kwargs.pop("timeout", (8.0, 30.0))
+            read_timeout = original_timeout[1] if isinstance(original_timeout, tuple) else original_timeout
+            return super().request(
+                method,
+                RZD_EDGE_RELAY,
+                headers=headers,
+                timeout=(8.0, read_timeout),
+                **kwargs,
+            )
 
         addresses = list(RZD_ADDRESS_POOL)
         if self._preferred_address in addresses:
