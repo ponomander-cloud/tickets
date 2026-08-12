@@ -13,7 +13,6 @@ KNOWN_STATION_CODES = {
     "москва": "2000000",
     "адлер": "2064150",
 }
-RZD_RESOLVED_ENDPOINT = "212.164.138.125"
 
 
 def validate_request(values: dict[str, Any]) -> dict[str, Any]:
@@ -171,19 +170,17 @@ def add_value_scores(offers: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def configured_client() -> RzdClient:
-    # Vercel DNS can stall resolving ticket.rzd.ru. Use an address from RZD's
-    # own current A-record pool while preserving the official virtual host.
-    # Requests, transport, endpoint construction, and response parsing remain
-    # entirely inside rzd-api 3.0.0.
+    # Keep timeouts bounded for an on-demand serverless request while using
+    # RZD's official endpoint. Endpoint construction and response parsing stay
+    # inside rzd-api 3.0.0.
     config = Config(
-        base_url=f"https://{RZD_RESOLVED_ENDPOINT}/api/v1",
+        base_url="https://ticket.rzd.ru/api/v1",
         connect_timeout=8.0,
         read_timeout=30.0,
         retry_total=0,
         referer="https://ticket.rzd.ru/",
     )
     session = requests.Session()
-    session.headers["Host"] = "ticket.rzd.ru"
     transport = RzdTransport(config, session)
     return RzdClient(_api=RzdApi(config, transport))
 
