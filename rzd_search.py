@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta, timezone
 from typing import Any
 
-from rzd_api import RzdClient
+from rzd_api import Config, RzdClient
 
 SOURCE = "ticket.rzd.ru via rzd-api 3.0.0"
 KNOWN_STATION_CODES = {
@@ -166,7 +166,11 @@ def add_value_scores(offers: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return scored
 
 
-def search(request_values: dict[str, Any], client_factory: Any = RzdClient) -> dict[str, Any]:
+def configured_client() -> RzdClient:
+    return RzdClient(Config(connect_timeout=8.0, read_timeout=30.0, retry_total=0))
+
+
+def search(request_values: dict[str, Any], client_factory: Any = configured_client) -> dict[str, Any]:
     req = validate_request(request_values)
     start: date = req["date_from"]
     request_output = {
