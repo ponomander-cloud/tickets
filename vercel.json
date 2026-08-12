@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/search.py": {
+      "maxDuration": 300,
+      "memory": 1024
+    }
+  },
+  "regions": ["fra1"]
+}

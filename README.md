@@ -1,5 +1,19 @@
 # RZD live coupe finder
 
+Live, coupe-only RZD search powered by `rzd-api==3.0.0`.
+
+## Vercel HTTP API
+
+Deploy the repository to Vercel and call:
+
+```text
+GET /api/search?from=Москва&to=Адлер&date_from=2026-08-15&days=14&top_per_day=3&overall_top=10
+```
+
+The endpoint does not read `request.json`. It returns one cheapest coupe offer per train and date,
+plus `overall_cheapest` and normalized `overall_value` rankings. `request.json` remains only for the
+optional batch workflow that writes `data/latest.json`.
+
 Собирает живые данные `ticket.rzd.ru` через `rzd-api` и сохраняет результат в `data/latest.json`.
 
 ## Формат результата
