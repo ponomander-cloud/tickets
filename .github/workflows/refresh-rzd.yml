@@ -46,14 +46,14 @@ jobs:
     timeout-minutes: 15
     defaults:
       run:
-        shell: bash
+        shell: powershell
     env:
       PYTHON_BIN: C:/Users/1/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - run: '"$PYTHON_BIN" -m pip install -r requirements.txt'
+      - run: '& $env:PYTHON_BIN -m pip install -r requirements.txt'
       - name: Build request
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -69,54 +69,18 @@ jobs:
           PAYLOAD_DAYS: ${{ github.event.client_payload.days }}
           PAYLOAD_TOP_PER_DAY: ${{ github.event.client_payload.top_per_day }}
           PAYLOAD_OVERALL_TOP: ${{ github.event.client_payload.overall_top }}
-        run: |
-          "$PYTHON_BIN" - <<'PY'
-          import json, os
-
-          def value(name, default):
-              if os.environ["EVENT_NAME"] == "repository_dispatch":
-                  return os.environ.get(f"PAYLOAD_{name}") or default
-              if os.environ["EVENT_NAME"] == "workflow_dispatch":
-                  return os.environ.get(f"INPUT_{name}") or default
-              return default
-
-          request = {
-              "from": value("FROM", "Москва"),
-              "to": value("TO", "Адлер"),
-              "date_from": value("DATE_FROM", "2026-08-15"),
-              "days": int(value("DAYS", "14")),
-              "top_per_day": int(value("TOP_PER_DAY", "3")),
-              "overall_top": int(value("OVERALL_TOP", "10")),
-          }
-          with open("request.json", "w", encoding="utf-8") as file:
-              json.dump(request, file, ensure_ascii=False, indent=2)
-          PY
+        run: '& $env:PYTHON_BIN scripts/build_workflow_request.py'
       - name: Fetch fresh RZD data
-        run: '"$PYTHON_BIN" fetch_rzd.py'
+        run: '& $env:PYTHON_BIN fetch_rzd.py'
       - name: Validate snapshot
-        run: |
-          "$PYTHON_BIN" - <<'PY'
-          import json
-          from datetime import datetime, timezone
-
-          with open("data/latest.json", encoding="utf-8") as file:
-              result = json.load(file)
-          fetched_at = datetime.fromisoformat(result["fetched_at"])
-          age = (datetime.now(timezone.utc) - fetched_at).total_seconds()
-          assert age < 600, f"snapshot is not fresh: {age:.0f}s old"
-          assert len(result["days"]) == result["request"]["days"]
-          assert len(result["overall_cheapest"]) <= result["request"]["overall_top"]
-          assert len(result["overall_value"]) <= result["request"]["overall_top"]
-          for day in result["days"]:
-              trains = [ticket["train_number"] for ticket in day["top_coupe"]]
-              assert len(trains) == len(set(trains)), f"duplicate train on {day['date']}"
-              assert len(trains) <= result["request"]["top_per_day"]
-          PY
+        run: '& $env:PYTHON_BIN scripts/validate_snapshot.py'
       - name: Commit snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add request.json data/latest.json
-          git commit -m "Refresh live RZD snapshot" || exit 0
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) { exit 0 }
+          git commit -m "Refresh live RZD snapshot"
           git pull --rebase origin main
           git push origin HEAD:main
