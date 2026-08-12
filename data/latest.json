@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-12T19:00:57.715385+00:00",
+  "fetched_at": "2026-08-12T19:21:09.913734+00:00",
   "source": "ticket.rzd.ru via rzd-api 3.0.0",
   "request": {
     "from": "Москва",
@@ -53,8 +53,8 @@
     },
     {
       "date": "2026-08-16",
-      "train_count": 8,
-      "coupe_train_count": 6,
+      "train_count": 7,
+      "coupe_train_count": 5,
       "top_coupe": [
         {
           "date": "2026-08-16",
@@ -93,7 +93,7 @@
     },
     {
       "date": "2026-08-17",
-      "train_count": 12,
+      "train_count": 13,
       "coupe_train_count": 11,
       "top_coupe": [
         {
@@ -242,7 +242,7 @@
           "date": "2026-08-20",
           "train_number": "557Х",
           "price": 7241.7,
-          "available_places": 24,
+          "available_places": 22,
           "departure_time": "13:05",
           "arrival_time": "14:36",
           "arrival_date": "2026-08-22",
@@ -271,7 +271,7 @@
           "date": "2026-08-21",
           "train_number": "587М",
           "price": 5920.3,
-          "available_places": 20,
+          "available_places": 18,
           "departure_time": "15:54",
           "arrival_time": "05:47",
           "arrival_date": "2026-08-23",
