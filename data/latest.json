@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-12T15:56:39.151813+00:00",
+  "fetched_at": "2026-08-12T18:05:31.098951+00:00",
   "source": "ticket.rzd.ru via rzd-api 3.0.0",
   "request": {
     "from": "Москва",
@@ -13,9 +13,31 @@
   "days": [
     {
       "date": "2026-08-15",
-      "train_count": 5,
-      "coupe_train_count": 4,
+      "train_count": 9,
+      "coupe_train_count": 7,
       "top_coupe": [
+        {
+          "date": "2026-08-15",
+          "train_number": "587М",
+          "price": 7297.3,
+          "available_places": 1,
+          "departure_time": "15:54",
+          "arrival_time": "05:47",
+          "arrival_date": "2026-08-17",
+          "duration": "1 д 13 ч 53 мин",
+          "duration_minutes": 2273
+        },
+        {
+          "date": "2026-08-15",
+          "train_number": "083М",
+          "price": 8356.8,
+          "available_places": 1,
+          "departure_time": "19:45",
+          "arrival_time": "11:18",
+          "arrival_date": "2026-08-17",
+          "duration": "1 д 15 ч 33 мин",
+          "duration_minutes": 2373
+        },
         {
           "date": "2026-08-15",
           "train_number": "099А",
@@ -26,35 +48,13 @@
           "arrival_date": "2026-08-16",
           "duration": "1 д 15 ч 55 мин",
           "duration_minutes": 2395
-        },
-        {
-          "date": "2026-08-15",
-          "train_number": "225А",
-          "price": 9585.2,
-          "available_places": 9,
-          "departure_time": "01:19",
-          "arrival_time": "20:02",
-          "arrival_date": "2026-08-16",
-          "duration": "1 д 18 ч 43 мин",
-          "duration_minutes": 2563
-        },
-        {
-          "date": "2026-08-15",
-          "train_number": "197Щ",
-          "price": 11634.9,
-          "available_places": 33,
-          "departure_time": "00:55",
-          "arrival_time": "19:00",
-          "arrival_date": "2026-08-16",
-          "duration": "1 д 18 ч 05 мин",
-          "duration_minutes": 2525
         }
       ]
     },
     {
       "date": "2026-08-16",
-      "train_count": 6,
-      "coupe_train_count": 6,
+      "train_count": 8,
+      "coupe_train_count": 7,
       "top_coupe": [
         {
           "date": "2026-08-16",
@@ -80,21 +80,21 @@
         },
         {
           "date": "2026-08-16",
-          "train_number": "104В",
-          "price": 11081.3,
+          "train_number": "044М",
+          "price": 8453.2,
           "available_places": 1,
-          "departure_time": "10:40",
-          "arrival_time": "10:24",
-          "arrival_date": "2026-08-17",
-          "duration": "23 ч 44 мин",
-          "duration_minutes": 1424
+          "departure_time": "23:46",
+          "arrival_time": "08:58",
+          "arrival_date": "2026-08-18",
+          "duration": "1 д 9 ч 12 мин",
+          "duration_minutes": 1992
         }
       ]
     },
     {
       "date": "2026-08-17",
-      "train_count": 11,
-      "coupe_train_count": 10,
+      "train_count": 12,
+      "coupe_train_count": 11,
       "top_coupe": [
         {
           "date": "2026-08-17",
@@ -111,7 +111,7 @@
           "date": "2026-08-17",
           "train_number": "471М",
           "price": 7297.3,
-          "available_places": 8,
+          "available_places": 11,
           "departure_time": "16:35",
           "arrival_time": "05:03",
           "arrival_date": "2026-08-19",
@@ -162,7 +162,7 @@
           "date": "2026-08-18",
           "train_number": "044М",
           "price": 6857.9,
-          "available_places": 7,
+          "available_places": 6,
           "departure_time": "23:46",
           "arrival_time": "08:58",
           "arrival_date": "2026-08-20",
@@ -174,7 +174,7 @@
     {
       "date": "2026-08-19",
       "train_count": 13,
-      "coupe_train_count": 12,
+      "coupe_train_count": 13,
       "top_coupe": [
         {
           "date": "2026-08-19",
@@ -191,7 +191,7 @@
           "date": "2026-08-19",
           "train_number": "587М",
           "price": 5920.3,
-          "available_places": 15,
+          "available_places": 14,
           "departure_time": "15:54",
           "arrival_time": "05:47",
           "arrival_date": "2026-08-21",
@@ -214,7 +214,7 @@
     {
       "date": "2026-08-20",
       "train_count": 11,
-      "coupe_train_count": 10,
+      "coupe_train_count": 9,
       "top_coupe": [
         {
           "date": "2026-08-20",
@@ -242,7 +242,7 @@
           "date": "2026-08-20",
           "train_number": "557Х",
           "price": 7241.7,
-          "available_places": 26,
+          "available_places": 25,
           "departure_time": "13:05",
           "arrival_time": "14:36",
           "arrival_date": "2026-08-22",
@@ -254,7 +254,7 @@
     {
       "date": "2026-08-21",
       "train_count": 12,
-      "coupe_train_count": 11,
+      "coupe_train_count": 10,
       "top_coupe": [
         {
           "date": "2026-08-21",
@@ -271,7 +271,7 @@
           "date": "2026-08-21",
           "train_number": "587М",
           "price": 5920.3,
-          "available_places": 18,
+          "available_places": 22,
           "departure_time": "15:54",
           "arrival_time": "05:47",
           "arrival_date": "2026-08-23",
@@ -534,7 +534,7 @@
     {
       "date": "2026-08-28",
       "train_count": 11,
-      "coupe_train_count": 9,
+      "coupe_train_count": 10,
       "top_coupe": [
         {
           "date": "2026-08-28",
@@ -707,7 +707,7 @@
       "arrival_date": "2026-08-25",
       "duration": "1 д 13 ч 53 мин",
       "duration_minutes": 2273,
-      "value_score": 0.195365
+      "value_score": 0.194597
     },
     {
       "date": "2026-08-25",
@@ -719,7 +719,7 @@
       "arrival_date": "2026-08-27",
       "duration": "1 д 13 ч 53 мин",
       "duration_minutes": 2273,
-      "value_score": 0.195365
+      "value_score": 0.194597
     },
     {
       "date": "2026-08-27",
@@ -731,7 +731,7 @@
       "arrival_date": "2026-08-29",
       "duration": "1 д 12 ч 28 мин",
       "duration_minutes": 2188,
-      "value_score": 0.210832
+      "value_score": 0.209231
     },
     {
       "date": "2026-08-28",
@@ -743,7 +743,7 @@
       "arrival_date": "2026-08-30",
       "duration": "1 д 12 ч 28 мин",
       "duration_minutes": 2188,
-      "value_score": 0.210832
+      "value_score": 0.209231
     },
     {
       "date": "2026-08-24",
@@ -755,7 +755,7 @@
       "arrival_date": "2026-08-26",
       "duration": "1 д 9 ч 21 мин",
       "duration_minutes": 2001,
-      "value_score": 0.220926
+      "value_score": 0.218121
     },
     {
       "date": "2026-08-24",
@@ -767,7 +767,7 @@
       "arrival_date": "2026-08-26",
       "duration": "1 д 9 ч 12 мин",
       "duration_minutes": 1992,
-      "value_score": 0.221635
+      "value_score": 0.218765
     },
     {
       "date": "2026-08-26",
@@ -779,7 +779,7 @@
       "arrival_date": "2026-08-28",
       "duration": "1 д 9 ч 12 мин",
       "duration_minutes": 1992,
-      "value_score": 0.221635
+      "value_score": 0.218765
     },
     {
       "date": "2026-08-19",
@@ -791,7 +791,7 @@
       "arrival_date": "2026-08-21",
       "duration": "1 д 12 ч 28 мин",
       "duration_minutes": 2188,
-      "value_score": 0.247509
+      "value_score": 0.244948
     },
     {
       "date": "2026-08-20",
@@ -803,7 +803,7 @@
       "arrival_date": "2026-08-22",
       "duration": "1 д 12 ч 28 мин",
       "duration_minutes": 2188,
-      "value_score": 0.247509
+      "value_score": 0.244948
     }
   ]
 }
