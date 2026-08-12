@@ -5,13 +5,21 @@ from http.server import BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+import requests
+
 from rzd_search import search
 
 SNAPSHOT_PATH = Path(__file__).resolve().parents[1] / "data" / "latest.json"
+SNAPSHOT_URL = "https://raw.githubusercontent.com/ponomander-cloud/tickets/main/data/latest.json"
 
 
 def verified_snapshot(params: dict[str, str]) -> dict[str, object] | None:
-    snapshot = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    try:
+        snapshot = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        response = requests.get(SNAPSHOT_URL, timeout=(5.0, 15.0))
+        response.raise_for_status()
+        snapshot = response.json()
     cached_request = snapshot["request"]
     comparable = ("from", "to", "date_from", "days", "top_per_day", "overall_top")
     if all(str(cached_request[key]) == str(params[key]) for key in comparable):
