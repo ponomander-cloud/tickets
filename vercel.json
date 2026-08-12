@@ -4,10 +4,12 @@
     "api/search.py": {
       "maxDuration": 300,
       "memory": 1024
-    },
-    "api/status.py": {
-      "maxDuration": 30,
-      "memory": 1024
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/status",
+      "destination": "/api/search?status=true"
+    }
+  ]
 }

@@ -67,6 +67,11 @@ def dispatch_refresh(params: dict[str, str], previous_fetched_at: str) -> None:
 class handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         try:
+            query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
+            if query.get("status", ["false"])[0].strip().casefold() in {"1", "true", "yes"}:
+                snapshot = load_snapshot()
+                self._json(200, {"fetched_at": snapshot["fetched_at"]})
+                return
             params, refresh = request_params(self.path)
             snapshot = load_snapshot()
             if not snapshot_matches(snapshot, params):
