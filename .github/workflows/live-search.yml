@@ -1,0 +1,57 @@
+name: Live RZD search
+run-name: live-search-${{ inputs.request_id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      request_id:
+        required: true
+        type: string
+      from_station:
+        required: true
+        type: string
+      to_station:
+        required: true
+        type: string
+      date_from:
+        required: true
+        type: string
+      days:
+        required: true
+        type: string
+      top_per_day:
+        required: true
+        type: string
+      overall_top:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Fetch live RZD data
+        run: |
+          python github_worker.py \
+            --from-station "${{ inputs.from_station }}" \
+            --to-station "${{ inputs.to_station }}" \
+            --date-from "${{ inputs.date_from }}" \
+            --days "${{ inputs.days }}" \
+            --top-per-day "${{ inputs.top_per_day }}" \
+            --overall-top "${{ inputs.overall_top }}" \
+            --output result/latest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ inputs.request_id }}
+          path: result/latest.json
+          retention-days: 1
