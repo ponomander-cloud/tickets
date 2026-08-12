@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import date, datetime, timedelta, timezone
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 import requests
 from rzd_api import Config, RzdClient
@@ -13,6 +14,60 @@ KNOWN_STATION_CODES = {
     "москва": "2000000",
     "адлер": "2064150",
 }
+RZD_ADDRESS_POOL = (
+    "212.164.138.120",
+    "212.164.138.121",
+    "212.164.138.122",
+    "212.164.138.123",
+    "212.164.138.124",
+    "212.164.138.125",
+    "212.164.138.126",
+    "212.164.138.127",
+    "212.164.138.128",
+    "212.164.138.129",
+    "212.164.138.130",
+    "212.164.138.131",
+)
+
+
+class RzdAddressPoolSession(requests.Session):
+    """Try RZD's published address pool without depending on runtime DNS."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._preferred_address: str | None = None
+
+    def request(self, method: str, url: str, **kwargs: Any) -> requests.Response:
+        parts = urlsplit(url)
+        if parts.hostname != "ticket.rzd.ru":
+            return super().request(method, url, **kwargs)
+
+        addresses = list(RZD_ADDRESS_POOL)
+        if self._preferred_address in addresses:
+            addresses.remove(self._preferred_address)
+            addresses.insert(0, self._preferred_address)
+
+        last_error: requests.RequestException | None = None
+        headers = dict(kwargs.pop("headers", {}) or {})
+        headers["Host"] = "ticket.rzd.ru"
+        original_timeout = kwargs.pop("timeout", (8.0, 30.0))
+        read_timeout = original_timeout[1] if isinstance(original_timeout, tuple) else original_timeout
+        for address in addresses:
+            direct_url = urlunsplit((parts.scheme, address, parts.path, parts.query, parts.fragment))
+            try:
+                response = super().request(
+                    method,
+                    direct_url,
+                    headers=headers,
+                    timeout=(2.0, read_timeout),
+                    **kwargs,
+                )
+                self._preferred_address = address
+                return response
+            except (requests.ConnectionError, requests.Timeout) as exc:
+                last_error = exc
+        assert last_error is not None
+        raise last_error
 
 
 def validate_request(values: dict[str, Any]) -> dict[str, Any]:
@@ -180,7 +235,7 @@ def configured_client() -> RzdClient:
         retry_total=0,
         referer="https://ticket.rzd.ru/",
     )
-    session = requests.Session()
+    session = RzdAddressPoolSession()
     transport = RzdTransport(config, session)
     return RzdClient(_api=RzdApi(config, transport))
 
