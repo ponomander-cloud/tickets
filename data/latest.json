@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-12T19:21:09.913734+00:00",
+  "fetched_at": "2026-08-13T09:30:15.245164+00:00",
   "source": "ticket.rzd.ru via rzd-api 3.0.0",
   "request": {
     "from": "Москва",
@@ -13,8 +13,8 @@
   "days": [
     {
       "date": "2026-08-15",
-      "train_count": 10,
-      "coupe_train_count": 7,
+      "train_count": 7,
+      "coupe_train_count": 6,
       "top_coupe": [
         {
           "date": "2026-08-15",
@@ -29,32 +29,32 @@
         },
         {
           "date": "2026-08-15",
-          "train_number": "542М",
-          "price": 7297.3,
-          "available_places": 1,
-          "departure_time": "15:34",
-          "arrival_time": "08:09",
-          "arrival_date": "2026-08-17",
-          "duration": "1 д 16 ч 35 мин",
-          "duration_minutes": 2435
+          "train_number": "225А",
+          "price": 9585.2,
+          "available_places": 5,
+          "departure_time": "01:19",
+          "arrival_time": "20:02",
+          "arrival_date": "2026-08-16",
+          "duration": "1 д 18 ч 43 мин",
+          "duration_minutes": 2563
         },
         {
           "date": "2026-08-15",
-          "train_number": "099А",
-          "price": 8686.8,
-          "available_places": 2,
-          "departure_time": "05:04",
-          "arrival_time": "20:59",
+          "train_number": "197Щ",
+          "price": 11634.9,
+          "available_places": 31,
+          "departure_time": "00:55",
+          "arrival_time": "19:00",
           "arrival_date": "2026-08-16",
-          "duration": "1 д 15 ч 55 мин",
-          "duration_minutes": 2395
+          "duration": "1 д 18 ч 05 мин",
+          "duration_minutes": 2525
         }
       ]
     },
     {
       "date": "2026-08-16",
-      "train_count": 7,
-      "coupe_train_count": 5,
+      "train_count": 8,
+      "coupe_train_count": 7,
       "top_coupe": [
         {
           "date": "2026-08-16",
@@ -71,7 +71,7 @@
           "date": "2026-08-16",
           "train_number": "471М",
           "price": 7297.3,
-          "available_places": 4,
+          "available_places": 3,
           "departure_time": "16:35",
           "arrival_time": "05:03",
           "arrival_date": "2026-08-18",
@@ -80,14 +80,14 @@
         },
         {
           "date": "2026-08-16",
-          "train_number": "104В",
-          "price": 11081.3,
-          "available_places": 1,
-          "departure_time": "10:40",
-          "arrival_time": "10:24",
-          "arrival_date": "2026-08-17",
-          "duration": "23 ч 44 мин",
-          "duration_minutes": 1424
+          "train_number": "479А",
+          "price": 11337.8,
+          "available_places": 2,
+          "departure_time": "11:15",
+          "arrival_time": "04:04",
+          "arrival_date": "2026-08-18",
+          "duration": "1 д 16 ч 49 мин",
+          "duration_minutes": 2449
         }
       ]
     },
@@ -111,7 +111,7 @@
           "date": "2026-08-17",
           "train_number": "471М",
           "price": 7297.3,
-          "available_places": 10,
+          "available_places": 6,
           "departure_time": "16:35",
           "arrival_time": "05:03",
           "arrival_date": "2026-08-19",
@@ -162,7 +162,7 @@
           "date": "2026-08-18",
           "train_number": "044М",
           "price": 6857.9,
-          "available_places": 6,
+          "available_places": 7,
           "departure_time": "23:46",
           "arrival_time": "08:58",
           "arrival_date": "2026-08-20",
@@ -174,7 +174,7 @@
     {
       "date": "2026-08-19",
       "train_count": 13,
-      "coupe_train_count": 13,
+      "coupe_train_count": 11,
       "top_coupe": [
         {
           "date": "2026-08-19",
@@ -242,7 +242,7 @@
           "date": "2026-08-20",
           "train_number": "557Х",
           "price": 7241.7,
-          "available_places": 22,
+          "available_places": 21,
           "departure_time": "13:05",
           "arrival_time": "14:36",
           "arrival_date": "2026-08-22",
@@ -293,7 +293,7 @@
     },
     {
       "date": "2026-08-22",
-      "train_count": 9,
+      "train_count": 8,
       "coupe_train_count": 7,
       "top_coupe": [
         {
@@ -534,7 +534,7 @@
     {
       "date": "2026-08-28",
       "train_count": 11,
-      "coupe_train_count": 10,
+      "coupe_train_count": 9,
       "top_coupe": [
         {
           "date": "2026-08-28",
