@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-17T18:34:13.362832+00:00",
+  "fetched_at": "2026-08-17T18:40:24.776733+00:00",
   "source": "ticket.rzd.ru via rzd-api 3.0.0",
   "request": {
     "from": "Адлер",
@@ -13,47 +13,84 @@
   "days": [
     {
       "date": "2026-08-22",
-      "train_count": 0,
+      "train_count": 13,
       "coupe_train_count": 0,
       "top_coupe": []
     },
     {
       "date": "2026-08-23",
-      "train_count": 0,
+      "train_count": 10,
       "coupe_train_count": 0,
       "top_coupe": []
     },
     {
       "date": "2026-08-24",
-      "train_count": 1,
+      "train_count": 13,
       "coupe_train_count": 0,
       "top_coupe": []
     },
     {
       "date": "2026-08-25",
-      "train_count": 1,
+      "train_count": 11,
       "coupe_train_count": 0,
       "top_coupe": []
     },
     {
       "date": "2026-08-26",
-      "train_count": 1,
+      "train_count": 13,
       "coupe_train_count": 0,
       "top_coupe": []
     },
     {
       "date": "2026-08-27",
-      "train_count": 0,
+      "train_count": 11,
       "coupe_train_count": 0,
       "top_coupe": []
     },
     {
       "date": "2026-08-28",
-      "train_count": 0,
-      "coupe_train_count": 0,
-      "top_coupe": []
+      "train_count": 13,
+      "coupe_train_count": 1,
+      "top_coupe": [
+        {
+          "date": "2026-08-28",
+          "train_number": "226С",
+          "price": 12795.7,
+          "available_places": 2,
+          "departure_time": "08:10",
+          "arrival_time": "22:19",
+          "arrival_date": "2026-08-29",
+          "duration": "1 д 14 ч 09 мин",
+          "duration_minutes": 2289
+        }
+      ]
     }
   ],
-  "overall_cheapest": [],
-  "overall_value": []
+  "overall_cheapest": [
+    {
+      "date": "2026-08-28",
+      "train_number": "226С",
+      "price": 12795.7,
+      "available_places": 2,
+      "departure_time": "08:10",
+      "arrival_time": "22:19",
+      "arrival_date": "2026-08-29",
+      "duration": "1 д 14 ч 09 мин",
+      "duration_minutes": 2289
+    }
+  ],
+  "overall_value": [
+    {
+      "date": "2026-08-28",
+      "train_number": "226С",
+      "price": 12795.7,
+      "available_places": 2,
+      "departure_time": "08:10",
+      "arrival_time": "22:19",
+      "arrival_date": "2026-08-29",
+      "duration": "1 д 14 ч 09 мин",
+      "duration_minutes": 2289,
+      "value_score": 0.0
+    }
+  ]
 }

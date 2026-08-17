@@ -274,7 +274,10 @@ def search(request_values: dict[str, Any], client_factory: Any = configured_clie
                 travel_date,
                 adults=1,
                 children=0,
-                only_with_seats=True,
+                # Keep scheduled trains in train_count even when RZD reports
+                # no currently bookable seats. Coupe offers are filtered
+                # independently by unique_coupe_offers below.
+                only_with_seats=False,
             )
             offers = unique_coupe_offers(routes, travel_date)
             output["days"].append(

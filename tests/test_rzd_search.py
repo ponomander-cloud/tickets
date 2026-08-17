@@ -54,6 +54,51 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(scored[0]["value_score"], 0.3)
         self.assertEqual(scored[1]["value_score"], 0.7)
 
+    def test_search_keeps_scheduled_trains_when_no_seats_are_available(self) -> None:
+        class FakeClient:
+            calls: list[bool] = []
+
+            def __enter__(self) -> "FakeClient":
+                return self
+
+            def __exit__(self, *_: object) -> None:
+                pass
+
+            def resolve_station_code(self, station: str) -> str:
+                return {"Адлер": "2064150", "Москва": "2000000"}[station]
+
+            def search_tickets(self, *_: object, **kwargs: object) -> list[SimpleNamespace]:
+                self.calls.append(bool(kwargs["only_with_seats"]))
+                return [
+                    route(
+                        "104Ж",
+                        [group("Купе", 5000, 0)],
+                    ),
+                    route(
+                        "102С",
+                        [group("Плацкарт", 3000, 0)],
+                    ),
+                ]
+
+        from rzd_search import search
+
+        fake = FakeClient()
+        result = search(
+            {
+                "from": "Адлер",
+                "to": "Москва",
+                "date_from": "2026-08-22",
+                "days": 1,
+                "top_per_day": 3,
+                "overall_top": 10,
+            },
+            client_factory=lambda: fake,
+        )
+
+        self.assertEqual(fake.calls, [False])
+        self.assertEqual(result["days"][0]["train_count"], 2)
+        self.assertEqual(result["days"][0]["coupe_train_count"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
