@@ -1,179 +1,17 @@
 {
-  "fetched_at": "2026-08-17T20:01:24.376472+00:00",
+  "fetched_at": "2026-08-17T20:03:11.172292+00:00",
   "source": "ticket.rzd.ru via rzd-api 3.0.0",
   "request": {
-    "from": "Москва",
-    "to": "Дербент",
-    "date_from": "2026-08-21",
+    "from": "Дербент",
+    "to": "Москва",
+    "date_from": "2026-08-29",
     "days": 14,
     "top_per_day": 5,
     "overall_top": 5,
     "car_type": "Купе",
-    "same_coupe": 2
+    "same_coupe": 4
   },
   "days": [
-    {
-      "date": "2026-08-21",
-      "train_count": 1,
-      "coupe_train_count": 0,
-      "top_coupe": []
-    },
-    {
-      "date": "2026-08-22",
-      "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-22",
-          "train_number": "085В",
-          "price": 13897.1,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-08-24",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "7",
-          "seat_numbers": [
-            26,
-            28
-          ]
-        }
-      ]
-    },
-    {
-      "date": "2026-08-23",
-      "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-23",
-          "train_number": "085В",
-          "price": 13897.1,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-08-25",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "2",
-          "seat_numbers": [
-            6,
-            8
-          ]
-        }
-      ]
-    },
-    {
-      "date": "2026-08-24",
-      "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-24",
-          "train_number": "085В",
-          "price": 11200.1,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-08-26",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "9",
-          "seat_numbers": [
-            34,
-            36
-          ]
-        }
-      ]
-    },
-    {
-      "date": "2026-08-25",
-      "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-25",
-          "train_number": "085В",
-          "price": 10401.1,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-08-27",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "9",
-          "seat_numbers": [
-            34,
-            36
-          ]
-        }
-      ]
-    },
-    {
-      "date": "2026-08-26",
-      "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-26",
-          "train_number": "085В",
-          "price": 12898.2,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-08-28",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "3",
-          "seat_numbers": [
-            10,
-            12
-          ]
-        }
-      ]
-    },
-    {
-      "date": "2026-08-27",
-      "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-27",
-          "train_number": "085В",
-          "price": 12898.2,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-08-29",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "2",
-          "seat_numbers": [
-            6,
-            8
-          ]
-        }
-      ]
-    },
-    {
-      "date": "2026-08-28",
-      "train_count": 1,
-      "coupe_train_count": 0,
-      "top_coupe": []
-    },
     {
       "date": "2026-08-29",
       "train_count": 1,
@@ -183,316 +21,82 @@
     {
       "date": "2026-08-30",
       "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-30",
-          "train_number": "085В",
-          "price": 12898.2,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-09-01",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "2",
-          "seat_numbers": [
-            6,
-            8
-          ]
-        }
-      ]
+      "coupe_train_count": 0,
+      "top_coupe": []
     },
     {
       "date": "2026-08-31",
       "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-08-31",
-          "train_number": "085В",
-          "price": 10401.1,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-09-02",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "9",
-          "seat_numbers": [
-            34,
-            36
-          ]
-        }
-      ]
+      "coupe_train_count": 0,
+      "top_coupe": []
     },
     {
       "date": "2026-09-01",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-02",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-03",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-04",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-05",
       "train_count": 2,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-09-01",
-          "train_number": "085В",
-          "price": 10574.7,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-09-03",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "7",
-          "seat_numbers": [
-            26,
-            28
-          ]
-        }
-      ]
+      "coupe_train_count": 0,
+      "top_coupe": []
     },
     {
-      "date": "2026-09-02",
+      "date": "2026-09-06",
       "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-09-02",
-          "train_number": "085В",
-          "price": 7939.9,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-09-04",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "9",
-          "seat_numbers": [
-            34,
-            36
-          ]
-        }
-      ]
+      "coupe_train_count": 0,
+      "top_coupe": []
     },
     {
-      "date": "2026-09-03",
+      "date": "2026-09-07",
       "train_count": 1,
-      "coupe_train_count": 1,
-      "top_coupe": [
-        {
-          "date": "2026-09-03",
-          "train_number": "085В",
-          "price": 7939.9,
-          "available_places": 2,
-          "departure_time": "19:27",
-          "arrival_time": "13:45",
-          "arrival_date": "2026-09-05",
-          "duration": "1 д 18 ч 18 мин",
-          "duration_minutes": 2538,
-          "same_coupe_places": 2,
-          "car_number": "03",
-          "compartment_number": "9",
-          "seat_numbers": [
-            34,
-            36
-          ]
-        }
-      ]
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-08",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-09",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-10",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
+    },
+    {
+      "date": "2026-09-11",
+      "train_count": 1,
+      "coupe_train_count": 0,
+      "top_coupe": []
     }
   ],
-  "overall_cheapest": [
-    {
-      "date": "2026-09-02",
-      "train_number": "085В",
-      "price": 7939.9,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-04",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ]
-    },
-    {
-      "date": "2026-09-03",
-      "train_number": "085В",
-      "price": 7939.9,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-05",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ]
-    },
-    {
-      "date": "2026-08-25",
-      "train_number": "085В",
-      "price": 10401.1,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-08-27",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ]
-    },
-    {
-      "date": "2026-08-31",
-      "train_number": "085В",
-      "price": 10401.1,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-02",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ]
-    },
-    {
-      "date": "2026-09-01",
-      "train_number": "085В",
-      "price": 10574.7,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-03",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "7",
-      "seat_numbers": [
-        26,
-        28
-      ]
-    }
-  ],
-  "overall_value": [
-    {
-      "date": "2026-09-02",
-      "train_number": "085В",
-      "price": 7939.9,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-04",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ],
-      "value_score": 0.0
-    },
-    {
-      "date": "2026-09-03",
-      "train_number": "085В",
-      "price": 7939.9,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-05",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ],
-      "value_score": 0.0
-    },
-    {
-      "date": "2026-08-25",
-      "train_number": "085В",
-      "price": 10401.1,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-08-27",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ],
-      "value_score": 0.289203
-    },
-    {
-      "date": "2026-08-31",
-      "train_number": "085В",
-      "price": 10401.1,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-02",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "9",
-      "seat_numbers": [
-        34,
-        36
-      ],
-      "value_score": 0.289203
-    },
-    {
-      "date": "2026-09-01",
-      "train_number": "085В",
-      "price": 10574.7,
-      "available_places": 2,
-      "departure_time": "19:27",
-      "arrival_time": "13:45",
-      "arrival_date": "2026-09-03",
-      "duration": "1 д 18 ч 18 мин",
-      "duration_minutes": 2538,
-      "same_coupe_places": 2,
-      "car_number": "03",
-      "compartment_number": "7",
-      "seat_numbers": [
-        26,
-        28
-      ],
-      "value_score": 0.309602
-    }
-  ]
+  "overall_cheapest": [],
+  "overall_value": []
 }
