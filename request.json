@@ -2,8 +2,8 @@
   "from": "Москва",
   "to": "Адлер",
   "date_from": "2026-08-21",
-  "days": 1,
-  "top_per_day": 3,
-  "overall_top": 10,
-  "same_coupe": 2
+  "days": 14,
+  "top_per_day": 5,
+  "overall_top": 5,
+  "same_coupe": 4
 }
