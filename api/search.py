@@ -61,7 +61,7 @@ def snapshot_matches(snapshot: dict[str, object], params: dict[str, str]) -> boo
     return all(str(cached[key]) == str(params[key]) for key in keys)
 
 
-def dispatch_refresh(params: dict[str, str], previous_fetched_at: str) -> None:
+def dispatch_refresh(params: dict[str, str], previous_fetched_at: str | None) -> None:
     token = os.environ.get("GITHUB_DISPATCH_TOKEN")
     if not token:
         raise RuntimeError("GITHUB_DISPATCH_TOKEN is not configured")
@@ -91,11 +91,12 @@ class handler(BaseHTTPRequestHandler):
                 return
             params, refresh = request_params(self.path)
             snapshot = load_snapshot()
-            if not snapshot_matches(snapshot, params):
-                self._json(409, {"error": "No snapshot exists for this request; use refresh=true"})
-                return
             if refresh:
-                previous_fetched_at = str(snapshot["fetched_at"])
+                previous_fetched_at = (
+                    str(snapshot["fetched_at"])
+                    if snapshot_matches(snapshot, params)
+                    else None
+                )
                 dispatch_refresh(params, previous_fetched_at)
                 self._json(
                     202,
@@ -104,6 +105,9 @@ class handler(BaseHTTPRequestHandler):
                         "previous_fetched_at": previous_fetched_at,
                     },
                 )
+                return
+            if not snapshot_matches(snapshot, params):
+                self._json(409, {"error": "No snapshot exists for this request; use refresh=true"})
                 return
             self._json(200, snapshot)
         except requests.HTTPError as exc:
