@@ -49,6 +49,7 @@ def request_params(path: str) -> tuple[dict[str, str], bool]:
         "days": query.get("days", ["14"])[0],
         "top_per_day": query.get("top_per_day", ["3"])[0],
         "overall_top": query.get("overall_top", ["10"])[0],
+        "same_coupe": query.get("same_coupe", ["0"])[0],
     }
     refresh = query.get("refresh", ["false"])[0].strip().casefold() in {"1", "true", "yes"}
     return params, refresh
@@ -57,8 +58,11 @@ def request_params(path: str) -> tuple[dict[str, str], bool]:
 def snapshot_matches(snapshot: dict[str, object], params: dict[str, str]) -> bool:
     cached = snapshot["request"]
     assert isinstance(cached, dict)
-    keys = ("from", "to", "date_from", "days", "top_per_day", "overall_top")
-    return all(str(cached[key]) == str(params[key]) for key in keys)
+    keys = ("from", "to", "date_from", "days", "top_per_day", "overall_top", "same_coupe")
+    return all(
+        str(cached.get(key, 0 if key == "same_coupe" else "")) == str(params[key])
+        for key in keys
+    )
 
 
 def dispatch_refresh(params: dict[str, str], previous_fetched_at: str | None) -> None:

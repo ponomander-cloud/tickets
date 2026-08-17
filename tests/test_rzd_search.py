@@ -4,7 +4,7 @@ import unittest
 from datetime import date
 from types import SimpleNamespace
 
-from rzd_search import add_value_scores, unique_coupe_offers
+from rzd_search import add_value_scores, same_coupe_offers, unique_coupe_offers
 
 
 def group(car_type: str, price: float, places: int) -> SimpleNamespace:
@@ -98,6 +98,46 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(fake.calls, [False])
         self.assertEqual(result["days"][0]["train_count"], 2)
         self.assertEqual(result["days"][0]["coupe_train_count"], 0)
+
+    def test_same_coupe_requires_places_in_one_physical_compartment(self) -> None:
+        routes = [
+            route("001А", [group("Купе", 5000, 4)]),
+            route("002Б", [group("Купе", 5500, 4)]),
+        ]
+
+        class FakeClient:
+            def get_carriages(self, *args: object, **__: object) -> SimpleNamespace:
+                train_number = str(args[4])
+                if train_number == "001А":
+                    compartments = [
+                        {"CompartmentNumber": "1", "Places": "1, 2"},
+                        {"CompartmentNumber": "2", "Places": "3, 4"},
+                    ]
+                else:
+                    compartments = [
+                        {"CompartmentNumber": "7", "Places": "1, 2, 3, 4"},
+                    ]
+                car = SimpleNamespace(
+                    car_type="Compartment",
+                    min_price=5000 if train_number == "001А" else 5500,
+                    number="08",
+                    raw={"FreePlacesByCompartments": compartments},
+                )
+                return SimpleNamespace(cars=[car])
+
+        offers = same_coupe_offers(
+            routes,
+            date(2026, 8, 15),
+            FakeClient(),
+            "2000000",
+            "2064150",
+            4,
+        )
+
+        self.assertEqual([item["train_number"] for item in offers], ["002Б"])
+        self.assertEqual(offers[0]["available_places"], 4)
+        self.assertEqual(offers[0]["compartment_number"], "7")
+        self.assertEqual(offers[0]["seat_numbers"], [1, 2, 3, 4])
 
 
 if __name__ == "__main__":

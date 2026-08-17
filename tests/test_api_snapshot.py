@@ -66,6 +66,7 @@ class RefreshHandlerTests(unittest.TestCase):
             "days": "7",
             "top_per_day": "3",
             "overall_top": "10",
+            "same_coupe": "0",
         }
         dispatch_refresh_mock.assert_called_once_with(expected_params, None)
         request_handler._json.assert_called_once_with(
@@ -85,6 +86,7 @@ class RefreshHandlerTests(unittest.TestCase):
             "days": 14,
             "top_per_day": 3,
             "overall_top": 10,
+            "same_coupe": 0,
         }
         load_snapshot_mock.return_value = {
             "fetched_at": "2026-08-17T10:00:00+00:00",
@@ -122,7 +124,8 @@ class RefreshHandlerTests(unittest.TestCase):
                 "date_from": "2026-08-15",
                 "days": 14,
                 "top_per_day": 3,
-                "overall_top": 10,
+            "overall_top": 10,
+            "same_coupe": 0,
             },
         }
         request_handler = self.make_handler(

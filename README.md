@@ -14,6 +14,10 @@ The endpoint does not read `request.json`. It returns one cheapest coupe offer p
 plus `overall_cheapest` and normalized `overall_value` rankings. `request.json` remains only for the
 optional batch workflow that writes `data/latest.json`.
 
+Pass `same_coupe=2` or `same_coupe=4` to require that many free seats in one physical coupe.
+Matching offers include `car_number`, `compartment_number`, and `seat_numbers`.
+The default `same_coupe=0` keeps the aggregate coupe search.
+
 Собирает живые данные `ticket.rzd.ru` через `rzd-api` и сохраняет результат в `data/latest.json`.
 
 ## Формат результата
@@ -35,7 +39,8 @@ optional batch workflow that writes `data/latest.json`.
   "date_from": "2026-08-15",
   "days": 14,
   "top_per_day": 3,
-  "overall_top": 10
+  "overall_top": 10,
+  "same_coupe": 0
 }
 ```
 

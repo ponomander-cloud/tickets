@@ -77,6 +77,7 @@ def validate_request(values: dict[str, Any]) -> dict[str, Any]:
     days = int(values.get("days", 14))
     top_per_day = int(values.get("top_per_day", 3))
     overall_top = int(values.get("overall_top", 10))
+    same_coupe = int(values.get("same_coupe", 0))
     if not origin or not destination:
         raise ValueError("'from' and 'to' are required")
     if not 1 <= days <= 31:
@@ -85,6 +86,8 @@ def validate_request(values: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("'top_per_day' must be between 1 and 10")
     if not 1 <= overall_top <= 50:
         raise ValueError("'overall_top' must be between 1 and 50")
+    if same_coupe not in {0, 2, 4}:
+        raise ValueError("'same_coupe' must be 0, 2, or 4")
     return {
         "from": origin,
         "to": destination,
@@ -92,6 +95,7 @@ def validate_request(values: dict[str, Any]) -> dict[str, Any]:
         "days": days,
         "top_per_day": top_per_day,
         "overall_top": overall_top,
+        "same_coupe": same_coupe,
     }
 
 
@@ -144,7 +148,13 @@ def date_only(value: str | None) -> str | None:
     return value[:10] if value else None
 
 
-def _ticket(route: Any, price: float, places: int | None, travel_date: date) -> dict[str, Any]:
+def _ticket(
+    route: Any,
+    price: float,
+    places: int | None,
+    travel_date: date,
+    **details: Any,
+) -> dict[str, Any]:
     minutes, duration = duration_info(route.departure_time, route.arrival_time)
     return {
         "date": travel_date.isoformat(),
@@ -156,6 +166,7 @@ def _ticket(route: Any, price: float, places: int | None, travel_date: date) -> 
         "arrival_date": date_only(route.arrival_time),
         "duration": duration,
         "duration_minutes": minutes,
+        **details,
     }
 
 
@@ -186,6 +197,100 @@ def unique_coupe_offers(routes: list[Any], travel_date: date) -> list[dict[str, 
         places = sum(known_places) if known_places else None
         candidates = [_ticket(route, cheapest, places, travel_date) for route, _ in cheapest_groups]
         offers.append(min(candidates, key=_daily_sort_key))
+    offers.sort(key=_daily_sort_key)
+    return offers
+
+
+def _compartment_places(car: Any) -> list[tuple[str, list[int]]]:
+    """Read RZD's exact free seats grouped by physical compartment."""
+    raw = getattr(car, "raw", {}) or {}
+    groups = raw.get("FreePlacesByCompartments") or raw.get("freePlacesByCompartments")
+    if not isinstance(groups, list):
+        return []
+    result: list[tuple[str, list[int]]] = []
+    for group in groups:
+        if not isinstance(group, dict):
+            continue
+        number = group.get("CompartmentNumber", group.get("compartmentNumber"))
+        places = group.get("Places", group.get("places"))
+        if number in (None, "") or places in (None, ""):
+            continue
+        try:
+            seat_numbers = sorted(
+                int(value.strip())
+                for value in str(places).split(",")
+                if value.strip()
+            )
+        except ValueError:
+            continue
+        if seat_numbers:
+            result.append((str(number), seat_numbers))
+    return result
+
+
+def same_coupe_offers(
+    routes: list[Any],
+    travel_date: date,
+    client: Any,
+    origin_code: str,
+    destination_code: str,
+    required_places: int,
+) -> list[dict[str, Any]]:
+    """Return one cheapest train offer with N free seats in one compartment."""
+    routes_by_train: dict[str, Any] = {}
+    for route in routes:
+        train_number = route.display_number or route.number
+        if not train_number or not any(
+            is_coupe(group.car_type)
+            and group.min_price is not None
+            and (group.available_places or 0) >= required_places
+            for group in route.car_groups
+        ):
+            continue
+        routes_by_train.setdefault(str(train_number), route)
+
+    offers: list[dict[str, Any]] = []
+    for route in routes_by_train.values():
+        departure_time = time_only(route.departure_time)
+        train_number = str(route.display_number or route.number)
+        if not departure_time:
+            continue
+        try:
+            carriages = client.get_carriages(
+                origin_code,
+                destination_code,
+                travel_date,
+                departure_time,
+                train_number,
+                provider=getattr(route, "provider", None) or "P1",
+            )
+        except Exception:
+            # A single unavailable car-pricing response must not discard the
+            # rest of the day's search.
+            continue
+
+        candidates: list[dict[str, Any]] = []
+        for car in carriages.cars:
+            if not is_coupe(car.car_type) or car.min_price is None:
+                continue
+            for compartment_number, seats in _compartment_places(car):
+                if len(seats) < required_places:
+                    continue
+                candidates.append(
+                    _ticket(
+                        route,
+                        float(car.min_price),
+                        len(seats),
+                        travel_date,
+                        same_coupe_places=required_places,
+                        car_number=car.number,
+                        compartment_number=compartment_number,
+                        seat_numbers=seats,
+                    )
+                )
+        if candidates:
+            offers.append(min(candidates, key=_daily_sort_key))
+
     offers.sort(key=_daily_sort_key)
     return offers
 
@@ -251,6 +356,7 @@ def search(request_values: dict[str, Any], client_factory: Any = configured_clie
         "top_per_day": req["top_per_day"],
         "overall_top": req["overall_top"],
         "car_type": "Купе",
+        "same_coupe": req["same_coupe"],
     }
     output: dict[str, Any] = {
         "fetched_at": datetime.now(timezone.utc).isoformat(),
@@ -279,7 +385,17 @@ def search(request_values: dict[str, Any], client_factory: Any = configured_clie
                 # independently by unique_coupe_offers below.
                 only_with_seats=False,
             )
-            offers = unique_coupe_offers(routes, travel_date)
+            if req["same_coupe"]:
+                offers = same_coupe_offers(
+                    routes,
+                    travel_date,
+                    client,
+                    origin_code,
+                    destination_code,
+                    req["same_coupe"],
+                )
+            else:
+                offers = unique_coupe_offers(routes, travel_date)
             output["days"].append(
                 {
                     "date": travel_date.isoformat(),

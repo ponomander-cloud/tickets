@@ -28,6 +28,10 @@ on:
         description: Overall ranking size
         required: true
         default: "10"
+      same_coupe:
+        description: Require this many seats in one coupe (0, 2, or 4)
+        required: true
+        default: "0"
   repository_dispatch:
     types: [refresh-rzd]
   schedule:
@@ -63,12 +67,14 @@ jobs:
           INPUT_DAYS: ${{ inputs.days }}
           INPUT_TOP_PER_DAY: ${{ inputs.top_per_day }}
           INPUT_OVERALL_TOP: ${{ inputs.overall_top }}
+          INPUT_SAME_COUPE: ${{ inputs.same_coupe }}
           PAYLOAD_FROM: ${{ github.event.client_payload.from }}
           PAYLOAD_TO: ${{ github.event.client_payload.to }}
           PAYLOAD_DATE_FROM: ${{ github.event.client_payload.date_from }}
           PAYLOAD_DAYS: ${{ github.event.client_payload.days }}
           PAYLOAD_TOP_PER_DAY: ${{ github.event.client_payload.top_per_day }}
           PAYLOAD_OVERALL_TOP: ${{ github.event.client_payload.overall_top }}
+          PAYLOAD_SAME_COUPE: ${{ github.event.client_payload.same_coupe }}
         run: '& $env:PYTHON_BIN scripts/build_workflow_request.py'
       - name: Fetch fresh RZD data
         run: '& $env:PYTHON_BIN fetch_rzd.py'
